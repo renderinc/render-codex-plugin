@@ -9,7 +9,13 @@ Use Render from Codex to deploy apps, validate `render.yaml`, debug failed deplo
 - A helper script at `scripts/validate-render-yaml.sh` for `render blueprints validate`
 - Plugin metadata and assets for Codex installation
 
-## Install the plugin locally
+## Install the plugin
+
+Install the plugin from the Codex plugin library in the app when it is available there. That is the preferred install path for most users.
+
+Use the local install flow below for development, testing, or pre-release access.
+
+## Install locally for development
 
 1. Copy the plugin into `~/.codex/plugins/render`:
 

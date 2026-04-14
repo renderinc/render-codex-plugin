@@ -1,14 +1,14 @@
 {
   "name": "render",
   "version": "0.1.0",
-  "description": "Deploy, debug, monitor, and troubleshoot Render services from Codex. Works with the Render CLI, with optional MCP for advanced workflows.",
+  "description": "Build, deploy, and troubleshoot apps on Render from Codex.",
   "author": {
     "name": "Render",
     "email": "support@render.com",
     "url": "https://render.com"
   },
-  "homepage": "https://render.com",
-  "repository": "https://github.com/render-oss/skills",
+  "homepage": "https://github.com/renderinc/render-codex-plugin",
+  "repository": "https://github.com/renderinc/render-codex-plugin",
   "license": "MIT",
   "keywords": [
     "render",
@@ -23,8 +23,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Render",
-    "shortDescription": "Deploy, debug, and monitor Render services with the Render CLI. Add MCP later for advanced workflows.",
-    "longDescription": "Deploy, debug, and monitor Render services from Codex with bundled Render skills. Start with the Render CLI for Blueprint generation, validation, logs, and troubleshooting. Add the bundled MCP server later if you want direct creation, richer monitoring, and structured queries.",
+    "shortDescription": "Build, deploy, and troubleshoot apps on Render.",
+    "longDescription": "Use Render in Codex to deploy apps, validate infrastructure, debug failures, monitor services, and work through common platform workflows.",
     "developerName": "Render",
     "category": "Developer Tools",
     "capabilities": [
@@ -32,11 +32,13 @@
       "Write"
     ],
     "websiteURL": "https://render.com/",
+    "privacyPolicyURL": "https://render.com/privacy",
+    "termsOfServiceURL": "https://render.com/terms",
     "brandColor": "#8a05ff",
     "defaultPrompt": [
-      "Help me install and authenticate the Render CLI for Render.",
-      "Debug my Render deployment with the Render CLI.",
-      "Help me deploy this project to Render."
+      "Help me deploy this project to Render.",
+      "Help me validate my render.yaml for Render.",
+      "Debug a failed Render deployment."
     ],
     "logo": "./assets/logo.svg"
   }

@@ -93,8 +93,6 @@ Never save a placeholder like `your_render_api_key` as the value of `RENDER_API_
 
 The bundled MCP server is configured in `.mcp.json` and reads `RENDER_API_KEY` through `bearer_token_env_var`.
 
-After the plugin is installed, you can also ask Codex: `Help me set up Render MCP in Codex for advanced workflows.`
-
 ## Keep skills up to date
 
 Run the manual sync script to refresh `skills/` from [render-oss/skills](https://github.com/render-oss/skills):

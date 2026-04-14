@@ -36,8 +36,8 @@
     "brandColor": "#8a05ff",
     "defaultPrompt": [
       "Help me install and authenticate the Render CLI for Render.",
-      "Validate my render.yaml for Render.",
-      "Help me set up Render MCP in Codex for advanced workflows."
+      "Debug my Render deployment with the Render CLI.",
+      "Help me deploy this project to Render."
     ],
     "logo": "./assets/logo.svg"
   }

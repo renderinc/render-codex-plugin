@@ -5,7 +5,6 @@ Deploy, debug, monitor, and troubleshoot applications on [Render](https://render
 ## What it includes
 
 - `skills/`: Render skills derived from [render-oss/skills](https://github.com/render-oss/skills)
-- `hooks/hooks.json`: `render.yaml` validation hook configuration
 - `scripts/validate-render-yaml.sh`: hook script that runs `render blueprints validate`
 - `scripts/sync-skills.sh`: manual skill sync script
 - `.mcp.json`: Render MCP server configuration using `RENDER_API_KEY`
@@ -19,7 +18,6 @@ This repository intentionally reuses content from the existing local Cursor Rend
 
 - skills
 - MCP configuration
-- hook configuration
 - validation script
 - logo asset
 

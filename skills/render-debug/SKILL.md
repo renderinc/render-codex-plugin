@@ -1,8 +1,8 @@
 ---
 name: render-debug
-description: Debug failed Render deployments by analyzing logs, metrics, and database state. Start with the Render CLI for logs and deploy status. Use MCP as an optional enhancement for richer structured data.
+description: Debug failed Render deployments by analyzing logs, metrics, and database state. Identifies errors (missing env vars, port binding, OOM, etc.) and suggests fixes. Use when deployments fail, services won't start, or users mention errors, logs, or debugging.
 license: MIT
-compatibility: Works with the Render CLI alone for logs and deploy status. MCP is optional for metrics and richer structured queries.
+compatibility: Requires Render MCP tools or CLI
 metadata:
   author: Render
   version: "1.1.0"
@@ -26,21 +26,19 @@ Activate this skill when:
 
 ## Prerequisites
 
-**CLI (primary path):** `render --version` and `render whoami -o json`
+**MCP tools (preferred):** Test with `list_services()` - provides structured data
 
-**MCP tools (optional enhancement):** Test with `list_services()` for structured data
+**CLI (fallback):** `render --version` - use if MCP tools unavailable
 
 **Authentication:** For MCP, use an API key (set in the MCP config or via the `RENDER_API_KEY` env var, depending on tool). For CLI, verify with `render whoami -o json`.
 
-If `RENDER_API_KEY` is set, make sure it is a real key and not a placeholder value from shell config. A bad value can cause misleading CLI auth failures.
-
 **Workspace:** `get_selected_workspace()` or `render workspace current -o json`
 
-> **Note:** The Render CLI is enough for logs, deploy status, and many debugging workflows. MCP adds structured service data, metrics, and structured database queries.
+> **Note:** MCP tools require the Render MCP server. If unavailable, use the CLI for logs and deploy status; metrics and structured database queries require MCP.
 
-## Optional MCP setup (per tool)
+## MCP Setup (Per Tool)
 
-If `list_services()` fails because MCP isn't configured, ask whether they want to keep going with the CLI or set up MCP for richer data. If they choose MCP, ask which AI tool they're using, then provide the matching instructions below. Always use their API key.
+If `list_services()` fails because MCP isn't configured, ask whether they want to set up MCP (preferred) or continue with the CLI fallback. If they choose MCP, ask which AI tool they're using, then provide the matching instructions below. Always use their API key.
 
 ### Cursor
 
@@ -118,26 +116,6 @@ Set my Render workspace to [WORKSPACE_NAME]
 
 ---
 
-## CLI-first debugging workflow
-
-Start here unless the user already has MCP configured and wants richer structured data.
-
-1. Identify the service with the Render CLI:
-```bash
-render services list
-```
-2. Check recent deploy state:
-```bash
-render deploys list <service-id>
-```
-3. Review logs:
-```bash
-render logs <service-id>
-```
-4. Escalate to MCP only if the user needs metrics, structured service metadata, or structured database queries.
-
----
-
 ## Debugging Workflow
 
 ### Step 1: Identify Failed Service
@@ -146,7 +124,7 @@ render logs <service-id>
 list_services()
 ```
 
-If MCP isn't configured, continue with CLI by default. Offer MCP setup only if the user wants richer structured data.
+If MCP isn't configured, ask whether to set it up (preferred) or continue with CLI. Then proceed.
 
 Look for services with failed status. Get details:
 

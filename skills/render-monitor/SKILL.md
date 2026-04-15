@@ -1,8 +1,8 @@
 ---
 name: render-monitor
-description: Monitor Render services in real-time. Start with the Render CLI for service status and logs. Use MCP as an optional enhancement for metrics, richer monitoring, and structured queries.
+description: Monitor Render services in real-time. Check health, performance metrics, logs, and resource usage. Use when users want to check service status, view metrics, monitor performance, or verify deployments are healthy.
 license: MIT
-compatibility: Works with the Render CLI alone for service status and logs. MCP is optional for metrics and richer structured queries.
+compatibility: Requires Render MCP tools or CLI
 metadata:
   author: Render
   version: "1.0.0"
@@ -25,21 +25,19 @@ Activate this skill when users want to:
 
 ## Prerequisites
 
-**CLI (primary path):** `render --version` and `render whoami -o json`
+**MCP tools (preferred):** Test with `list_services()` - provides structured data
 
-**MCP tools (optional enhancement):** Test with `list_services()` for structured data
+**CLI (fallback):** `render --version` - use if MCP tools unavailable
 
 **Authentication:** For MCP, use an API key (set in the MCP config or via the `RENDER_API_KEY` env var, depending on tool). For CLI, verify with `render whoami -o json`.
 
-If `RENDER_API_KEY` is set, make sure it is a real key and not a placeholder value from shell config. A bad value can cause misleading CLI auth failures.
-
 **Workspace:** `get_selected_workspace()` or `render workspace current -o json`
 
-> **Note:** The Render CLI is enough for status checks, deploy checks, and logs. MCP adds metrics, richer monitoring, and structured database queries.
+> **Note:** MCP tools require the Render MCP server. If unavailable, use the CLI for status and logs; metrics and database queries require MCP.
 
-## Optional MCP setup (per tool)
+## MCP Setup (Per Tool)
 
-If `list_services()` fails because MCP isn't configured, ask whether they want to keep going with the CLI or set up the hosted Render MCP server for richer monitoring. If they choose MCP, ask which AI tool they're using, then provide the matching instructions below. Always use their API key.
+If `list_services()` fails because MCP isn't configured, guide the user to set up the hosted Render MCP server. Ask which AI tool they're using, then provide the matching instructions below. Always use their API key.
 
 ### Cursor
 
@@ -114,25 +112,6 @@ After MCP is configured, have the user set the active Render workspace with a pr
 ```
 Set my Render workspace to [WORKSPACE_NAME]
 ```
-
----
-
-## CLI-first health check
-
-Start here unless the user specifically wants metrics or already has MCP configured.
-
-```bash
-# 1. Check service status
-render services list
-
-# 2. Check recent deploys
-render deploys list <service-id>
-
-# 3. Review logs
-render logs <service-id>
-```
-
-Use MCP afterward if the user needs metrics, latency analysis, or structured database queries.
 
 ---
 

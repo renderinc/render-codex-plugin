@@ -1,8 +1,8 @@
 ---
 name: render-deploy
-description: Deploy applications to Render by analyzing codebases, generating render.yaml Blueprints, and providing Dashboard deeplinks. Start with Blueprint and Render CLI flows by default. Use MCP as an optional fast path for direct creation.
+description: Deploy applications to Render by analyzing codebases, generating render.yaml Blueprints, and providing Dashboard deeplinks. Use when the user wants to deploy, host, publish, or set up their application on Render's cloud platform.
 license: MIT
-compatibility: Requires a Git repository on GitHub, GitLab, or Bitbucket for Blueprint or MCP flows. Blueprint can reference a prebuilt image but render.yaml must live in the repo. Render CLI is the primary path for validation and deployment guidance. MCP is optional for direct creation.
+compatibility: Requires a Git repository on GitHub, GitLab, or Bitbucket for Blueprint/MCP flows. Blueprint can reference a prebuilt image but render.yaml must live in the repo. Render CLI recommended for Blueprint validation; MCP or CLI required for operations.
 metadata:
   author: Render
   version: "1.1.0"
@@ -14,8 +14,8 @@ metadata:
 Render supports **Git-backed** services and **prebuilt Docker image** services.
 
 This skill covers **Git-backed** flows:
-1. **Blueprint Method** - Generate `render.yaml` for Infrastructure-as-Code deployments
-2. **Direct Creation** - Optionally create services instantly via MCP tools
+1. **Blueprint Method** - Generate render.yaml for Infrastructure-as-Code deployments
+2. **Direct Creation** - Create services instantly via MCP tools
 
 Blueprints can also run a **prebuilt Docker image** by using `runtime: image`, but the `render.yaml` still must live in a Git repo.
 
@@ -64,12 +64,12 @@ Both methods require a Git repository pushed to GitHub, GitLab, or Bitbucket. (I
 
 Use this decision rule by default unless the user requests a specific method. Analyze the codebase first; only ask if deployment intent is unclear (e.g., DB, workers, cron).
 
-**Use Direct Creation (MCP) only when ALL are true:**
+**Use Direct Creation (MCP) when ALL are true:**
 - Single service (one web app or one static site)
 - No separate worker/cron services
 - No attached databases or Key Value
 - Simple env vars only (no shared env groups)
-If this path fits but MCP is not configured, ask whether the user wants to set up MCP for a faster path or continue with the Blueprint and CLI flow.
+If this path fits and MCP isn't configured yet, stop and guide MCP setup before proceeding.
 
 **Use Blueprint when ANY are true:**
 - Multiple services (web + worker, API + frontend, etc.)
@@ -78,7 +78,7 @@ If this path fits but MCP is not configured, ask whether the user wants to set u
 - You want reproducible IaC or a render.yaml committed to the repo
 - Monorepo or multi-env setup that needs consistent configuration
 
-If unsure, ask a quick clarifying question, but default to Blueprint for safety. Treat Direct Creation via MCP as an optional fast path, not the baseline setup flow.
+If unsure, ask a quick clarifying question, but default to Blueprint for safety. For a single service, strongly prefer Direct Creation via MCP and guide MCP setup if needed.
 
 ## Prerequisites Check
 
@@ -94,8 +94,16 @@ git remote -v
 
 - If no remote exists, stop and ask the user to create/push a remote **or** switch to Docker image deploy.
 
-**2. Check Render CLI Installation (Primary Path)**
+**2. Check MCP Tools Availability (Preferred for Single-Service)**
 
+MCP tools provide the best experience. Check if available by attempting:
+```
+list_services()
+```
+
+If MCP tools are available, you can skip CLI installation for most operations.
+
+**3. Check Render CLI Installation (for Blueprint validation)**
 ```bash
 render --version
 ```
@@ -103,31 +111,9 @@ If not installed, offer to install:
 - macOS: `brew install render`
 - Linux/macOS: `curl -fsSL https://raw.githubusercontent.com/render-oss/cli/main/bin/install.sh | sh`
 
-**3. Check CLI Authentication**
+**4. MCP Setup (if MCP isn't configured)**
 
-If using the CLI path, verify the user can access their account:
-```bash
-render whoami -o json
-```
-
-If `render whoami` fails or returns empty data, ask the user which method they prefer:
-- **API key**: `export RENDER_API_KEY="rnd_xxxxx"` using a real Render API key, not a placeholder
-- **Login**: `render login`
-
-If `RENDER_API_KEY` is already set, make sure it is not a placeholder value copied into shell config. A bad value can break CLI auth in misleading ways.
-
-**4. Check MCP Tools Availability (Optional Fast Path)**
-
-MCP tools provide the best experience. Check if available by attempting:
-```
-list_services()
-```
-
-If MCP tools are available, you can use them for direct creation. If not, continue with the Blueprint and CLI path by default.
-
-**5. MCP Setup (optional)**
-
-If `list_services()` fails because MCP isn't configured, ask whether they want to set up MCP for direct creation or continue with the Blueprint and CLI path. If they choose MCP, ask which AI tool they're using, then provide the matching instructions below. Always use their API key.
+If `list_services()` fails because MCP isn't configured, ask whether they want to set up MCP (preferred) or continue with the CLI fallback. If they choose MCP, ask which AI tool they're using, then provide the matching instructions below. Always use their API key.
 
 ### Cursor
 
@@ -202,6 +188,20 @@ After MCP is configured, have the user set the active Render workspace with a pr
 ```
 Set my Render workspace to [WORKSPACE_NAME]
 ```
+
+**5. Check Authentication (CLI fallback only)**
+
+If MCP isn't available, use the CLI instead and verify you can access your account:
+```bash
+# Check if user is logged in (use -o json for non-interactive mode)
+render whoami -o json
+```
+
+If `render whoami` fails or returns empty data, the CLI is not authenticated. The CLI won't always prompt automatically, so explicitly prompt the user to authenticate:
+
+If neither is configured, ask user which method they prefer:
+- **API Key (CLI)**: `export RENDER_API_KEY="rnd_xxxxx"` (Get from https://dashboard.render.com/u/*/settings#api-keys)
+- **Login**: `render login` (Opens browser for OAuth)
 
 **6. Check Workspace Context**
 

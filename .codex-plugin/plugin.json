@@ -24,13 +24,10 @@
   "interface": {
     "displayName": "Render",
     "shortDescription": "Build, deploy, and troubleshoot apps on Render.",
-    "longDescription": "Use Render in Codex to deploy apps, validate infrastructure, debug failures, monitor services, and work through common platform workflows.",
+    "longDescription": "Use Render in Codex to deploy apps, validate infrastructure, debug failures, and monitor services.",
     "developerName": "Render",
     "category": "Developer Tools",
-    "capabilities": [
-      "Interactive",
-      "Write"
-    ],
+    "capabilities": ["Interactive", "Write"],
     "websiteURL": "https://render.com/",
     "privacyPolicyURL": "https://render.com/privacy",
     "termsOfServiceURL": "https://render.com/terms",

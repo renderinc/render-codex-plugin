@@ -1,7 +1,7 @@
 {
   "name": "render",
   "version": "0.1.0",
-  "description": "Build, deploy, and troubleshoot apps on Render from Codex.",
+  "description": "Skills for deploying, debugging, monitoring, and migrating apps on Render.",
   "author": {
     "name": "Render",
     "email": "support@render.com",
@@ -15,16 +15,14 @@
     "deploy",
     "cloud",
     "blueprint",
-    "mcp",
     "monitoring",
     "debugging"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Render",
-    "shortDescription": "Build, deploy, and troubleshoot apps on Render.",
-    "longDescription": "Use Render in Codex to deploy apps, validate infrastructure, debug failures, and monitor services.",
+    "shortDescription": "Deploy, debug, monitor, and migrate apps on Render.",
+    "longDescription": "Provides skills for deploying apps with Blueprints, debugging failed deploys, monitoring service health and metrics, building Render Workflows, and migrating from Heroku.",
     "developerName": "Render",
     "category": "Developer Tools",
     "capabilities": ["Interactive", "Write"],
@@ -33,7 +31,7 @@
     "termsOfServiceURL": "https://render.com/terms",
     "brandColor": "#8a05ff",
     "defaultPrompt": [
-      "Help me deploy this project to Render.",
+      "How are my Render services doing?",
       "Help me validate my render.yaml for Render.",
       "Debug a failed Render deployment."
     ],

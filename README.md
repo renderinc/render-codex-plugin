@@ -5,7 +5,6 @@ Use Render from Codex to deploy apps, validate `render.yaml`, debug failed deplo
 ## What you get
 
 - Bundled Render skills for deployment, debugging, monitoring, migrations, and workflows
-- A bundled `.mcp.json` file for the hosted Render MCP server
 - A helper script at `scripts/validate-render-yaml.sh` for `render blueprints validate`
 - Plugin metadata and assets for Codex installation
 
@@ -92,24 +91,6 @@ render whoami -o json
 ```
 
 If `render whoami -o json` fails, fix authentication before you rely on Render workflows in Codex.
-
-## Use the optional MCP server
-
-The plugin bundles `.mcp.json` for the hosted Render MCP server. To use it, set `RENDER_API_KEY` before you start Codex.
-
-1. Create a Render API key in the [Render Dashboard](https://dashboard.render.com/).
-2. Open Account settings > API Keys.
-3. Start Codex from Terminal with the key set:
-
-```bash
-export RENDER_API_KEY="rnd_..."
-open -a Codex
-```
-
-4. Keep using that Terminal-launched session. If you start Codex from the Dock or Spotlight, it might not inherit `RENDER_API_KEY`.
-5. If you want the variable to persist, add it to your shell profile such as `~/.zshrc`, then start a new Terminal session.
-
-Never set `RENDER_API_KEY` to a placeholder value such as `your_render_api_key`. Use a real key or leave the variable unset.
 
 ## For maintainers
 

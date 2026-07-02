@@ -6,7 +6,7 @@
 
 **Cause:** MCP server not configured in the AI tool.
 
-**Fix:** Follow the setup instructions in the main SKILL.md for your specific tool (Cursor, Claude Code, Codex). After adding the config, restart the tool.
+**Fix:** Follow the setup instructions in the main SKILL.md for your specific tool. In Codex, install or update the Render plugin and start a new thread. For manual MCP clients, add the config and restart the tool.
 
 ### "Connection refused" or timeout
 
@@ -30,17 +30,18 @@
 
 ### "Unauthorized" or 401
 
-**Cause:** Missing, invalid, or expired API key.
+**Cause:** Missing or expired OAuth authorization in Codex, or a missing, invalid, or expired API key in manual clients.
 
 **Fix:**
-1. Generate a new API key: `https://dashboard.render.com/u/*/settings#api-keys`
-2. Update the key in your tool's MCP config
-3. Restart the tool
-4. Verify with `list_services()`
+1. In Codex, reinstall or update the Render plugin, then complete the Render OAuth prompt in a new thread.
+2. For manual clients, generate a new API key: `https://dashboard.render.com/u/*/settings#api-keys`
+3. Update the key in your tool's MCP config.
+4. Restart the tool.
+5. Verify with `list_services()`.
 
 ### "Forbidden" or 403
 
-**Cause:** API key doesn't have access to the requested resource, or wrong workspace.
+**Cause:** OAuth authorization or API key does not have access to the requested resource, or the wrong workspace is selected.
 
 **Fix:**
 - Check the active workspace with `get_selected_workspace()`
@@ -64,9 +65,10 @@
 
 ### Codex
 
-- Requires `RENDER_API_KEY` env var to be set in the shell where Codex runs
-- Added via: `codex mcp add render --url https://mcp.render.com/mcp --bearer-token-env-var RENDER_API_KEY`
-- If the env var is not set when Codex starts, MCP auth fails
+- Uses the Render plugin's `.mcp.json` entry for `https://mcp.render.com/mcp`
+- Uses the pre-registered OAuth client id `codex`
+- Complete the Render OAuth prompt when Codex requests access
+- Start a new thread after installing or updating the plugin so MCP tools reload
 
 ## Workspace Issues
 

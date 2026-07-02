@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "render": {
+      "type": "http",
+      "url": "https://mcp.render.com/mcp",
+      "oauth_resource": "https://mcp.render.com/mcp",
+      "oauth": {
+        "client_id": "codex"
+      }
+    }
+  }
+}

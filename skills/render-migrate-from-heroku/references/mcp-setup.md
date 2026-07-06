@@ -4,22 +4,12 @@ The Render MCP server is recommended for direct service creation and automated v
 
 ## Render MCP Server (Recommended)
 
-Hosted at `https://mcp.render.com/mcp` (recommended, auto-updates). The Render Codex plugin uses OAuth for this server with the pre-registered client id `codex`. Manual MCP clients can still use a Render API key from [Account Settings](https://dashboard.render.com/u/*/settings#api-keys).
+Hosted at `https://mcp.render.com/mcp` (recommended, auto-updates). Requires a Render API key from [Account Settings](https://dashboard.render.com/u/*/settings#api-keys).
 
 Alternative: run locally via Docker or binary (see [Render MCP docs](https://render.com/docs/mcp-server)).
 Source: [render-mcp-server](https://github.com/render-oss/render-mcp-server)
 
 **Detecting the user's tool:** Infer the AI tool from this skill's install path (`~/.cursor/skills/` = Cursor, `~/.claude/skills/` = Claude Code, `~/.codex/skills/` = Codex). If the path doesn't match a known tool, ask the user which tool they're using, then follow the matching section below.
-
-### Codex
-
-1. Install or update the Render plugin in Codex.
-
-2. Start a new thread after installation so Codex loads the plugin-provided MCP server from `.mcp.json`.
-
-3. Complete the Render OAuth flow when Codex prompts for access.
-
-4. Retry `list_services()`.
 
 ### Cursor
 
@@ -58,6 +48,25 @@ claude mcp add --transport http render https://mcp.render.com/mcp --header "Auth
 
 3. Restart Claude Code, then retry `list_services()`.
 
+### Codex
+
+1. Get a Render API key:
+```
+https://dashboard.render.com/u/*/settings#api-keys
+```
+
+2. Set it in your shell:
+```bash
+export RENDER_API_KEY="<YOUR_API_KEY>"
+```
+
+3. Add the MCP server with the Codex CLI:
+```bash
+codex mcp add render --url https://mcp.render.com/mcp --bearer-token-env-var RENDER_API_KEY
+```
+
+4. Restart Codex, then retry `list_services()`.
+
 ### Other Tools
 
 If using another AI tool, direct the user to the [Render MCP docs](https://render.com/docs/mcp-server) for that tool's setup steps and install method.
@@ -90,4 +99,4 @@ After configuring, test your connections:
 - Ask: "List my Render services" — should return services via Render MCP (required)
 - Ask: "List my Heroku apps" — should return apps via Heroku MCP (optional)
 
-If Render MCP fails in Codex, reinstall or update the Render plugin and retry in a new thread. For manual clients, check your API key and restart your MCP client. If Heroku MCP is not configured, the migration skill still works — it reads local project files and asks you to provide config var values manually.
+If Render MCP fails, check your API key and restart your MCP client. If Heroku MCP is not configured, the migration skill still works — it reads local project files and asks you to provide config var values manually.

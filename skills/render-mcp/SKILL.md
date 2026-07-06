@@ -7,7 +7,7 @@ description: >-
   fails, the user asks about Render MCP setup, or an action skill needs MCP
   but it's not connected yet.
   Trigger terms: MCP, Render MCP, list_services, MCP setup, MCP server,
-  OAuth, API key, Bearer token, mcp.render.com, workspace selection.
+  API key, Bearer token, mcp.render.com, workspace selection.
 license: MIT
 compatibility: Render MCP server (hosted at mcp.render.com)
 metadata:
@@ -36,23 +36,11 @@ Action skills (render-deploy, render-debug, render-monitor) use MCP tools for th
 |----------|-------|
 | URL | `https://mcp.render.com/mcp` |
 | Transport | HTTP (streamable) |
-| Auth | OAuth in Codex plugin with pre-registered client id `codex`; bearer token for manual clients |
-| API key page | `https://dashboard.render.com/u/*/settings#api-keys` for manual fallback |
+| Auth | Bearer token (Render API key) |
+| API key page | `https://dashboard.render.com/u/*/settings#api-keys` |
 | Docs | `https://render.com/docs/mcp-server` |
 
 ## Setup by Tool
-
-### Codex
-
-1. Install or update the Render plugin in Codex.
-
-2. Start a new thread after installation so Codex loads the plugin-provided MCP server from `.mcp.json`.
-
-3. When Codex prompts for Render access, complete the Render OAuth flow.
-
-4. Verify with `list_services()`.
-
-No `RENDER_API_KEY` or `codex mcp add` command is needed for the plugin-provided MCP connection. The plugin config uses the same client id as `--oauth-client-id codex`.
 
 ### Cursor
 
@@ -86,6 +74,24 @@ claude mcp add --transport http render https://mcp.render.com/mcp --header "Auth
 ```
 
 3. Restart Claude Code, then verify with `list_services()`
+
+### Codex
+
+1. Get an API key from the [Render Dashboard](https://dashboard.render.com/u/*/settings#api-keys)
+
+2. Set the key in your shell:
+
+```bash
+export RENDER_API_KEY="<YOUR_API_KEY>"
+```
+
+3. Add the MCP server:
+
+```bash
+codex mcp add render --url https://mcp.render.com/mcp --bearer-token-env-var RENDER_API_KEY
+```
+
+4. Restart Codex, then verify with `list_services()`
 
 ### Other Tools
 
@@ -185,8 +191,6 @@ Optional: `httpLatencyQuantile` (0.5, 0.95, 0.99), `httpPath` (filter by endpoin
 | Mistake | Fix |
 |---------|-----|
 | Wrong URL (using SSE endpoint) | Use `https://mcp.render.com/mcp` (not `/sse`) |
-| Codex plugin installed but tools unavailable | Start a new thread so Codex reloads plugin MCP tools |
-| OAuth prompt does not appear in Codex | Reinstall or update the Render plugin, then retry in a new thread |
 | Expired or invalid API key | Generate a new key from Dashboard > Account Settings > API Keys |
 | Wrong workspace selected | Run `list_workspaces()` and switch to the correct one |
 | Using MCP to create image-backed services | Not supported — use Dashboard or API for prebuilt Docker images |

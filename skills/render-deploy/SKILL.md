@@ -115,9 +115,7 @@ If not installed, offer to install:
 
 If `list_services()` fails, set up the Render MCP server. For detailed per-tool walkthroughs, see **render-mcp**.
 
-**Codex plugin setup:** Install or update the Render plugin, complete Render OAuth when prompted, then retry `list_services()` in a new thread.
-
-**Manual MCP setup:** Add the Render MCP server to your AI tool's MCP config:
+**Quick setup:** Add the Render MCP server to your AI tool's MCP config:
 - **URL:** `https://mcp.render.com/mcp`
 - **Auth header:** `Authorization: Bearer <YOUR_API_KEY>`
 - **API key:** `https://dashboard.render.com/u/*/settings#api-keys`

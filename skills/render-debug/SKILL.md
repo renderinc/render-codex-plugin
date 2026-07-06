@@ -30,7 +30,7 @@ Activate this skill when:
 
 **CLI (fallback):** `render --version` - use if MCP tools unavailable
 
-**Authentication:** In Codex, the Render plugin provides OAuth for MCP. For manual MCP clients, use a Render API key. For CLI, verify with `render whoami -o json`.
+**Authentication:** For MCP, use an API key (set in the MCP config or via the `RENDER_API_KEY` env var, depending on tool). For CLI, verify with `render whoami -o json`.
 
 **Workspace:** `get_selected_workspace()` or `render workspace current -o json`
 
@@ -40,9 +40,7 @@ Activate this skill when:
 
 If `list_services()` fails, set up the Render MCP server. For detailed per-tool walkthroughs, see **render-mcp**.
 
-**Codex plugin setup:** Install or update the Render plugin, complete Render OAuth when prompted, then retry `list_services()` in a new thread.
-
-**Manual MCP setup:** Add the Render MCP server to your AI tool's MCP config:
+**Quick setup:** Add the Render MCP server to your AI tool's MCP config:
 - **URL:** `https://mcp.render.com/mcp`
 - **Auth header:** `Authorization: Bearer <YOUR_API_KEY>`
 - **API key:** `https://dashboard.render.com/u/*/settings#api-keys`

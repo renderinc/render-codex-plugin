@@ -1,6 +1,6 @@
 {
   "name": "render",
-  "version": "0.1.0+codex.20260702184329",
+  "version": "0.1.0+codex.20260710214040",
   "description": "Skills for deploying, debugging, monitoring, and migrating apps on Render.",
   "author": {
     "name": "Render",
@@ -20,6 +20,7 @@
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Render",
     "shortDescription": "Deploy, debug, monitor, and migrate apps on Render.",
